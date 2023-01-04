@@ -8,6 +8,8 @@ import {
   Card,
   Text,
   Divider,
+  NumberInput,
+  NumberInputField
 } from "@chakra-ui/react";
 import { useClipboard } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
@@ -20,6 +22,7 @@ function Calculator() {
   const [activeInput, setActiveInput] = useState("input1");
 
   const [operator, setOperator] = useState("+");
+  const [isNumber,setIsNumber] = useState(false)
 
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
 
@@ -50,13 +53,34 @@ function Calculator() {
   const numberButtonHandler = (e: any) => {
     switch (activeInput) {
       case "input1":
-        setInput1(input1 + e.target.value);
+        if (input1 === "0") {
+          setInput1(e.target.value);
+        } else {
+          setInput1(input1 + e.target.value);
+        }
         break;
       case "input2":
-        setInput2(input2 + e.target.value);
+        if (input2 === "0") {
+          setInput1(e.target.value);
+        } else {
+          setInput2(input2 + e.target.value);
+        }
         break;
     }
   };
+  const onChangeInputHandler = (e:any) =>{
+    setInput2(e.target.value)
+    checkIfOnlyNumbers(e.target.value)
+
+  }
+
+  const checkIfOnlyNumbers = (string:String) => {
+    if (string.match(/^\d+$/)) {
+      setIsNumber (true);
+    } else {
+      setIsNumber (false);
+    }
+  }
 
   return (
     <div>
@@ -71,13 +95,16 @@ function Calculator() {
             bg="whiteAlpha"
           >
             <GridItem colStart={1} colEnd={1}>
-              <Input
+              <NumberInput
                 value={input1}
                 onFocus={() => setActiveInput("input1")}
-                onChange={(e) => setInput1(e.target.value)}
+                onChange={(e) => setInput1(e)}
                 w="100%"
                 h="100%"
-              />
+              >
+              <NumberInputField />
+            
+      </NumberInput>
             </GridItem>
             <GridItem colStart={2} colEnd={4} w="100%" h="100%">
               <Center w="100%" h="100%">
@@ -90,13 +117,15 @@ function Calculator() {
               </Center>
             </GridItem>
             <GridItem colStart={4} colEnd={4}>
-              <Input
+              <NumberInput
                 value={input2}
                 onFocus={() => setActiveInput("input2")}
-                onChange={(e) => setInput2(e.target.value)}
+                onChange={(e) => setInput2(e)}
                 w="100%"
                 h="100%"
-              />
+              >
+                  <NumberInputField />
+              </NumberInput>
             </GridItem>
 
             <GridItem colStart={2} colEnd={4}>
