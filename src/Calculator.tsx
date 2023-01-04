@@ -7,8 +7,8 @@ import { Select } from '@chakra-ui/react'
 
 
 function Calculator() {
-  const [input1 , setInput1] = useState('0')
-  const [input2 , setInput2] = useState('0')
+  const [input1 , setInput1] = useState('')
+  const [input2 , setInput2] = useState('')
   const [result , setResult] = useState<number>(0)
   const [activeInput , setActiveInput] = useState('input1')
 
@@ -43,11 +43,11 @@ function Calculator() {
   }
   const numberButtonHandler = (e:any) => {
     switch(activeInput){
-      case 'inpu1':
+      case 'input1':
         setInput1(input1 + e.target.value)
         break
-      case 'inpu1':
-        setInput2(input1 + e.target.value)
+      case 'input2':
+        setInput2(input2 + e.target.value)
         break
         
     }
