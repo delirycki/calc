@@ -9,25 +9,46 @@ import {
   Text,
   Divider,
   NumberInput,
-  NumberInputField
+  NumberInputField,
 } from "@chakra-ui/react";
 import { useClipboard } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { Select } from "@chakra-ui/react";
+import { db } from "./db_info";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 function Calculator() {
+  const calcCollectionRef = collection(db, "calculator");
+
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
   const [result, setResult] = useState<number>(0);
   const [activeInput, setActiveInput] = useState("input1");
 
   const [operator, setOperator] = useState("+");
-  const [isNumber,setIsNumber] = useState(false)
+  const [isNumber, setIsNumber] = useState(false);
 
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
 
   const operationHandler = (e: any) => {
     setOperator(e.target.value);
+  };
+  const createCalc = async () => {
+    const dateNow = Date.now();
+    await addDoc(calcCollectionRef, {
+      number1: Number(input1),
+      operator,
+      number2: Number(input2),
+      result,
+      dateNow,
+    });
   };
 
   const resultHandler = () => {
@@ -49,6 +70,7 @@ function Calculator() {
         console.log(`Sorry, we are out of ${operator}.`);
     }
     setValue(result.toString());
+    createCalc()
   };
   const numberButtonHandler = (e: any) => {
     switch (activeInput) {
@@ -68,23 +90,10 @@ function Calculator() {
         break;
     }
   };
-  const onChangeInputHandler = (e:any) =>{
-    setInput2(e.target.value)
-    checkIfOnlyNumbers(e.target.value)
-
-  }
-
-  const checkIfOnlyNumbers = (string:String) => {
-    if (string.match(/^\d+$/)) {
-      setIsNumber (true);
-    } else {
-      setIsNumber (false);
-    }
-  }
 
   return (
-    <div>
-      <Center h="100vh" w="100vw">
+ 
+      <Center  w="100vw">
         <Card>
           <Grid
             h="500px"
@@ -102,9 +111,8 @@ function Calculator() {
                 w="100%"
                 h="100%"
               >
-              <NumberInputField />
-            
-      </NumberInput>
+                <NumberInputField />
+              </NumberInput>
             </GridItem>
             <GridItem colStart={2} colEnd={4} w="100%" h="100%">
               <Center w="100%" h="100%">
@@ -124,7 +132,7 @@ function Calculator() {
                 w="100%"
                 h="100%"
               >
-                  <NumberInputField />
+                <NumberInputField />
               </NumberInput>
             </GridItem>
 
@@ -278,7 +286,7 @@ function Calculator() {
                 w="100%"
                 h="100%"
                 variant="ghost"
-                value="7"
+                value="1"
                 onClick={numberButtonHandler}
               >
                 1
@@ -290,7 +298,7 @@ function Calculator() {
                 w="100%"
                 h="100%"
                 variant="ghost"
-                value="8"
+                value="2"
                 onClick={numberButtonHandler}
               >
                 2
@@ -302,7 +310,7 @@ function Calculator() {
                 w="100%"
                 h="100%"
                 variant="ghost"
-                value="9"
+                value="3"
                 onClick={numberButtonHandler}
               >
                 3
@@ -335,7 +343,6 @@ function Calculator() {
           </Grid>
         </Card>
       </Center>
-    </div>
   );
 }
 
