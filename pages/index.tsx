@@ -8,7 +8,8 @@ import {
   deleteDoc,
   doc,
   onSnapshot,
-  query
+  query,
+  orderBy
 } from "firebase/firestore";
 import {
   Table,
@@ -40,16 +41,18 @@ export default function Home() {
 
   useEffect(() => {
     const getCalculations = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setCalculations(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      const data = await getDocs(query(usersCollectionRef,orderBy('dateNow')));
+      const calcArry = (data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setCalculations(calcArry.reverse())
     };
-    // onSnapshot(usersCollectionRef,(snapshot)=>{
-    //   snapshot.docs.forEach((doc) => {
-    //     //@ts-ignore
-    //     setCalculations((prev) => [doc.data()])
-    //    console.log("onsnapshot", doc.data());
-    //   })
-    // })
+    
+    onSnapshot(usersCollectionRef,(snapshot)=>{
+      snapshot.docs.forEach((doc) => {
+        //@ts-ignore
+        setCalculations((prev) => [doc.data()])
+       console.log("onsnapshot", doc.data());
+      })
+    })
   
 
     getCalculations();
