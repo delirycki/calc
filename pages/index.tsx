@@ -43,13 +43,13 @@ export default function Home() {
       const data = await getDocs(usersCollectionRef);
       setCalculations(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-    onSnapshot(usersCollectionRef,(snapshot)=>{
-      snapshot.docs.forEach((doc) => {
-        //@ts-ignore
-        setCalculations((prev) => [doc.data()])
-       console.log("onsnapshot", doc.data());
-      })
-    })
+    // onSnapshot(usersCollectionRef,(snapshot)=>{
+    //   snapshot.docs.forEach((doc) => {
+    //     //@ts-ignore
+    //     setCalculations((prev) => [doc.data()])
+    //    console.log("onsnapshot", doc.data());
+    //   })
+    // })
   
 
     getCalculations();
