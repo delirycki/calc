@@ -40,25 +40,19 @@ export default function Home() {
   const usersCollectionRef = collection(db, "calculator");
 
   useEffect(() => {
-    const getCalculations = async () => {
-      const data = await getDocs(query(usersCollectionRef,orderBy('dateNow')));
-      const calcArry = (data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      setCalculations(calcArry.reverse())
-    };
     
     onSnapshot(usersCollectionRef,(snapshot)=>{
-      snapshot.docs.forEach((doc) => {
-        //@ts-ignore
-        setCalculations((prev) => [doc.data()])
-       console.log("onsnapshot", doc.data());
-      })
-    })
-  
+      setCalculations(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
 
-    getCalculations();
-  
+      })
+  ;  
   }, []);
   console.log(calculations);
+  function sortByDate(array:any[]) {
+    return array.sort((a, b) => {
+      return b.date-a.date  ;
+    });
+  }
 
   const deleteCalc = async (id: string) => {
     const calcDoc = doc(db, "calculator", id);
