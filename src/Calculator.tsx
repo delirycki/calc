@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { Center, Square, Circle } from "@chakra-ui/react";
 import {
   Grid,
@@ -17,33 +17,31 @@ import { Select } from "@chakra-ui/react";
 import { db } from "./db_info";
 import {
   collection,
-  getDocs,
   addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
+
 } from "firebase/firestore";
+import {Calculation, InputType , Operator } from './types'
+
 
 function Calculator() {
   const calcCollectionRef = collection(db, "calculator");
 
-  const [input1, setInput1] = useState("");
-  const [input2, setInput2] = useState("");
+  const [input1, setInput1] = useState("0");
+  const [input2, setInput2] = useState("0");
   const [result, setResult] = useState<number>(0);
-  const [activeInput, setActiveInput] = useState("input1");
+  const [activeInput, setActiveInput] = useState<InputType>("input1");
 
-  const [operator, setOperator] = useState("+");
-  const [isNumber, setIsNumber] = useState(false);
+  const [operator, setOperator] = useState<Operator>("+");
 
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
 
-  const operationHandler = (e: any) => {
-    setOperator(e.target.value);
+  const operationHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+    setOperator(e.target.value as Operator );
     setActiveInput("input2")
-  };
+  }
   const createCalc = async () => {
     const dateNow = Date.now();
-    const obj = {
+    const obj:Calculation = {
       number1: Number(input1),
       operator,
       number2: Number(input2),
@@ -81,20 +79,21 @@ function Calculator() {
     createCalc();
   }, [result]);
 
-  const numberButtonHandler = (e: any) => {
+  const numberButtonHandler = (e: Event) => {
+    const target = e.target as HTMLButtonElement
     switch (activeInput) {
       case "input1":
         if (input1 === "0") {
-          setInput1(e.target.value);
+          setInput1(target.value);
         } else {
-          setInput1(input1 + e.target.value);
+          setInput1(input1 + target.value);
         }
         break;
       case "input2":
         if (input2 === "0") {
-          setInput1(e.target.value);
+          setInput1(target.value);
         } else {
-          setInput2(input2 + e.target.value);
+          setInput2(input2 + target.value);
         }
         break;
     }
