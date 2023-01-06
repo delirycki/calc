@@ -28,7 +28,7 @@ function Calculator() {
 
   const [input1, setInput1] = useState("0");
   const [input2, setInput2] = useState("0");
-  const [result, setResult] = useState<number>(0);
+  const [result, setResult] = useState(0);
   const [activeInput, setActiveInput] = useState<InputType>("input1");
 
   const [operator, setOperator] = useState<Operator>("+");

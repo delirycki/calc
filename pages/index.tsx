@@ -9,7 +9,7 @@ import {
   doc,
   onSnapshot,
   query,
-  orderBy
+  orderBy,
 } from "firebase/firestore";
 import {
   Table,
@@ -26,17 +26,10 @@ import {
 import { db } from "../src/db_info";
 import calculator from "./calculator";
 import { Button } from "@chakra-ui/react";
-type MyType = {
-  number1: number;
-  number2: number;
-  dateNow: number;
-  result: number;
-  operator: string;
-  id: string;
-};
+import { CalculationRespone } from "../src/types";
 
 export default function Home() {
-  const [calculations, setCalculations] = useState<MyType[]>([]);
+  const [calculations, setCalculations] = useState<CalculationRespone[]>([]);
   const usersCollectionRef = collection(db, "calculator");
 
   useEffect(() => {
@@ -47,12 +40,6 @@ export default function Home() {
       })
   ;  
   }, []);
-  console.log(calculations);
-  function sortByDate(array:any[]) {
-    return array.sort((a, b) => {
-      return b.date-a.date  ;
-    });
-  }
 
   const deleteCalc = async (id: string) => {
     const calcDoc = doc(db, "calculator", id);
@@ -74,9 +61,8 @@ export default function Home() {
     return `${hours}:${minutes}:${seconds} ${day}-${month}-${year} `;
   };
 
-  const rows = calculations.map((calculation: any) => {
+  const rows = calculations.map((calculation: CalculationRespone) => {
     return (
-      
       <Tr key={calculation.id}>
         <Td>{getTime(calculation.dateNow)}</Td>
         <Td>{calculation.number1}</Td>
@@ -98,7 +84,6 @@ export default function Home() {
           </Center>
         </Td>
       </Tr>
-      
     );
   });
 
