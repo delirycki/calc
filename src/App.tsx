@@ -9,8 +9,8 @@ function App() {
     <div >
       <Nav/>
        <Routes>
-        <Route path="/" element={<ListOfCalc />}/>
-        <Route path="/calculator" element={<Calculator />}/>
+        <Route path="/calc/" element={<ListOfCalc />}/>
+        <Route path="/calc/calculator" element={<Calculator />}/>
         </Routes>
     </div>
   );

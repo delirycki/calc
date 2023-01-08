@@ -20,10 +20,10 @@ export default function Nav() {
           <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
             <Box mr={3}>Logo</Box>
             <Button ml={1} variant="ghost">
-              <Link to="/"> Results</Link>{" "}
+              <Link to="/calc/"> Results</Link>{" "}
             </Button>
             <Button ml={1} variant="ghost">
-              <Link to="/calculator">Calculator </Link>
+              <Link to="/calc/calculator">Calculator </Link>
             </Button>
             <Spacer />
             <Flex alignItems={"center"}>
