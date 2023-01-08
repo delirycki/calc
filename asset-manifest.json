@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/delirycki/calc/static/js/main.3de57f95.js",
-    "index.html": "/delirycki/calc/index.html",
-    "main.3de57f95.js.map": "/delirycki/calc/static/js/main.3de57f95.js.map"
+    "main.js": "/calc/static/js/main.ab0305d9.js",
+    "index.html": "/calc/index.html",
+    "main.ab0305d9.js.map": "/calc/static/js/main.ab0305d9.js.map"
   },
   "entrypoints": [
-    "static/js/main.3de57f95.js"
+    "static/js/main.ab0305d9.js"
   ]
 }
