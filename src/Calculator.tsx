@@ -1,6 +1,6 @@
-import React, { useState, useEffect, MouseEvent } from 'react';
+import React, { useState, useEffect, MouseEvent } from "react";
 
-import { Center} from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
 import {
   Grid,
   GridItem,
@@ -13,13 +13,8 @@ import {
 import { useClipboard } from "@chakra-ui/react";
 import { Select } from "@chakra-ui/react";
 import { db } from "./db_info";
-import {
-  collection,
-  addDoc,
-
-} from "firebase/firestore";
-import {Calculation, InputType , Operator } from './types'
-
+import { collection, addDoc } from "firebase/firestore";
+import { Calculation, InputType, Operator } from "./types";
 
 function Calculator() {
   const calcCollectionRef = collection(db, "calculator");
@@ -32,19 +27,19 @@ function Calculator() {
   const [operator, setOperator] = useState<Operator>("+");
 
   const { onCopy, setValue, hasCopied } = useClipboard("");
-  const operationHandler = (e:any )=> {
-    setOperator(e.target.value as Operator );
-    setActiveInput("input2")
-  }
-  const createCalc = async () => {
+  const operationHandler = (e: any) => {
+    setOperator(e.target.value as Operator);
+    setActiveInput("input2");
+  };
+  const createCalc = async (resultS: number) => {
     const dateNow = Date.now();
-    const obj:Calculation = {
+    const obj: Calculation = {
       number1: Number(input1),
       operator,
       number2: Number(input2),
-      result,
+      result: resultS,
       dateNow,
-    }
+    };
     try {
       await addDoc(calcCollectionRef, obj);
     } catch (e) {
@@ -53,32 +48,34 @@ function Calculator() {
   };
 
   const resultHandler = () => {
+    let resultTemp = result;
     switch (operator) {
       case "+":
-        setResult(parseFloat(input1) + parseFloat(input2));
-        console.log(result);
+        resultTemp = parseFloat(input1) + parseFloat(input2);
+
         break;
       case "-":
-        setResult(parseFloat(input1) - parseFloat(input2));
+        resultTemp = parseFloat(input1) - parseFloat(input2);
         break;
       case "*":
-        setResult(parseFloat(input1) * parseFloat(input2));
+        resultTemp = parseFloat(input1) * parseFloat(input2);
         break;
       case "/":
-        setResult(parseFloat(input1) / parseFloat(input2));
+        resultTemp = parseFloat(input1) / parseFloat(input2);
         break;
       default:
         console.log(`Sorry, we are out of ${operator}.`);
     }
+    submitHandler(resultTemp);
   };
-  useEffect(() => {
+  const submitHandler = (result: number) => {
+    setResult(result);
     setValue(result.toString());
-    createCalc();
-    // eslint-disable-next-line
-  }, [result]);
+    createCalc(result);
+  };
 
   const numberButtonHandler = (e: MouseEvent) => {
-    const target = e.target as HTMLButtonElement
+    const target = e.target as HTMLButtonElement;
     switch (activeInput) {
       case "input1":
         if (input1 === "0") {
@@ -117,9 +114,7 @@ function Calculator() {
               h="100%"
               isRequired={true}
             >
-              <NumberInputField 
-              w="100%"
-              h="100%"/>
+              <NumberInputField w="100%" h="100%" />
             </NumberInput>
           </GridItem>
           <GridItem colStart={2} colEnd={4} w="100%" h="100%">
@@ -141,10 +136,7 @@ function Calculator() {
               h="100%"
               isRequired={true}
             >
-              <NumberInputField  
-              w="100%"
-              h="100%"
-              />
+              <NumberInputField w="100%" h="100%" />
             </NumberInput>
           </GridItem>
 
