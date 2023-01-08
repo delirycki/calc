@@ -117,8 +117,11 @@ function Calculator() {
               onChange={(e) => setInput1(e)}
               w="100%"
               h="100%"
+              isRequired={true}
             >
-              <NumberInputField />
+              <NumberInputField 
+              w="100%"
+              h="100%"/>
             </NumberInput>
           </GridItem>
           <GridItem colStart={2} colEnd={4} w="100%" h="100%">
@@ -138,8 +141,12 @@ function Calculator() {
               onChange={(e) => setInput2(e)}
               w="100%"
               h="100%"
+              isRequired={true}
             >
-              <NumberInputField />
+              <NumberInputField  
+              w="100%"
+              h="100%"
+              />
             </NumberInput>
           </GridItem>
 
