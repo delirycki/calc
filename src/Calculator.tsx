@@ -31,7 +31,7 @@ function Calculator() {
 
   const [operator, setOperator] = useState<Operator>("+");
 
-  const { onCopy, value, setValue, hasCopied } = useClipboard("");
+  const { onCopy, setValue, hasCopied } = useClipboard("");
   const operationHandler = (e:any )=> {
     setOperator(e.target.value as Operator );
     setActiveInput("input2")
@@ -74,6 +74,7 @@ function Calculator() {
   useEffect(() => {
     setValue(result.toString());
     createCalc();
+    // eslint-disable-next-line
   }, [result]);
 
   const numberButtonHandler = (e: MouseEvent) => {

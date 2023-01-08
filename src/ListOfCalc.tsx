@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   collection,
-  getDocs,
-  addDoc,
-  updateDoc,
   deleteDoc,
   doc,
   onSnapshot,
@@ -14,7 +11,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -40,6 +36,7 @@ import { CalculationRespone } from "../src/types";
         snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
     });
+    // eslint-disable-next-line
   }, []);
 
   const deleteCalc = async (id: string) => {
