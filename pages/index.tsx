@@ -30,14 +30,17 @@ import { CalculationRespone } from "../src/types";
 
 export default function Home() {
   const [calculations, setCalculations] = useState<CalculationRespone[]>([]);
-  const usersCollectionRef = query(collection(db, "calculator"),orderBy('dateNow',"desc"));
+  const usersCollectionRef = query(
+    collection(db, "calculator"),
+    orderBy("dateNow", "desc")
+  );
 
   useEffect(() => {
-    
-    onSnapshot(usersCollectionRef,(snapshot)=>{
-      setCalculations(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-      })
-  ;  
+    onSnapshot(usersCollectionRef, (snapshot) => {
+      setCalculations(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
   }, []);
 
   const deleteCalc = async (id: string) => {
@@ -46,7 +49,6 @@ export default function Home() {
   };
   const getTime = (timestrap: number) => {
     const date = new Date(timestrap);
-
 
     // Get the date and time components
     const day = date.getDate().toString().padStart(2, "0");

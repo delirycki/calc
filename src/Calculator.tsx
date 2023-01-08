@@ -91,7 +91,7 @@ function Calculator() {
         break;
       case "input2":
         if (input2 === "0") {
-          setInput1(target.value);
+          setInput2(target.value);
         } else {
           setInput2(input2 + target.value);
         }
