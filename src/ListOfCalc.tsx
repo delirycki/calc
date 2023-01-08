@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Inter } from "@next/font/google";
 import {
   collection,
   getDocs,
@@ -24,11 +23,10 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { db } from "../src/db_info";
-import calculator from "./calculator";
 import { Button } from "@chakra-ui/react";
 import { CalculationRespone } from "../src/types";
 
-export default function Home() {
+ function ListOfCalc() {
   const [calculations, setCalculations] = useState<CalculationRespone[]>([]);
   const usersCollectionRef = query(
     collection(db, "calculator"),
@@ -38,6 +36,7 @@ export default function Home() {
   useEffect(() => {
     onSnapshot(usersCollectionRef, (snapshot) => {
       setCalculations(
+        //@ts-ignore
         snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
     });
@@ -111,3 +110,4 @@ export default function Home() {
     </>
   );
 }
+export default ListOfCalc

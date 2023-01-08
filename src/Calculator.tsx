@@ -1,18 +1,16 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import { Center, Square, Circle } from "@chakra-ui/react";
+import React, { useState, useEffect, MouseEvent } from 'react';
+
+import { Center} from "@chakra-ui/react";
 import {
   Grid,
   GridItem,
-  useColorMode,
   Button,
   Card,
   Text,
-  Divider,
   NumberInput,
   NumberInputField,
 } from "@chakra-ui/react";
 import { useClipboard } from "@chakra-ui/react";
-import { Input } from "@chakra-ui/react";
 import { Select } from "@chakra-ui/react";
 import { db } from "./db_info";
 import {
@@ -34,8 +32,7 @@ function Calculator() {
   const [operator, setOperator] = useState<Operator>("+");
 
   const { onCopy, value, setValue, hasCopied } = useClipboard("");
-
-  const operationHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+  const operationHandler = (e:any )=> {
     setOperator(e.target.value as Operator );
     setActiveInput("input2")
   }
@@ -79,7 +76,7 @@ function Calculator() {
     createCalc();
   }, [result]);
 
-  const numberButtonHandler = (e: Event) => {
+  const numberButtonHandler = (e: MouseEvent) => {
     const target = e.target as HTMLButtonElement
     switch (activeInput) {
       case "input1":

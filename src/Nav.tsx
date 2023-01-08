@@ -1,59 +1,44 @@
-import { Children, ReactNode } from 'react';
+import { Link } from "react-router-dom";
 import {
   Box,
   Flex,
-  Avatar,
-  Link,
   Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
   useColorMode,
   Center,
-  VStack,
-  Spacer
-} from '@chakra-ui/react';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+  Spacer,
+} from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('white', 'gray.700'),
-    }}
-    href={'#'}>
-    {children}
-  </Link>
-);
-
-export default function Nav({ children }: { children: ReactNode }) {
+export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
-    <Center bg={useColorModeValue('white', 'gray.900')}>
-      <Box  px={4} maxW='1000px'w="100%">
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Box>Logo</Box>
-            <Spacer/>
-          <Flex alignItems={'center'}>
-            <Stack direction={'row'} spacing={7}>
-              <Button onClick={toggleColorMode} bg={useColorModeValue('whiteAlpha.100','gray.900')}>
-                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-              </Button> 
-            </Stack>
+      <Center bg={useColorModeValue("white", "gray.900")}>
+        <Box px={4} maxW="1000px" w="100%">
+          <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+            <Box mr={3}>Logo</Box>
+            <Button ml={1}>
+              <Link to="/"> Results</Link>{" "}
+            </Button>
+            <Button ml={1}>
+              <Link to="/calculator">Calculator </Link>
+            </Button>
+            <Spacer />
+            <Flex alignItems={"center"}>
+              <Stack direction={"row"} spacing={7}>
+                <Button
+                  onClick={toggleColorMode}
+                  bg={useColorModeValue("whiteAlpha.100", "gray.900")}
+                >
+                  {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+                </Button>
+              </Stack>
+            </Flex>
           </Flex>
-        </Flex>
-      </Box>
+        </Box>
       </Center>
-      {children}
     </>
   );
 }
