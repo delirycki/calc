@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/delirycki/calc/static/js/main.3de57f95.js",
+    "index.html": "/delirycki/calc/index.html",
+    "main.3de57f95.js.map": "/delirycki/calc/static/js/main.3de57f95.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.3de57f95.js"
+  ]
+}
